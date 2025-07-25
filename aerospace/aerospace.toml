@@ -1,0 +1,172 @@
+# Reference: https://github.com/i3/i3/blob/next/etc/config
+# Reference: https://github.com/adriankarlen/dots/blob/main/.config/aerospace/aerospace.toml
+
+# i3 doesn't have "normalizations" feature that why we disable them here.
+# But the feature is very helpful.
+# Normalizations eliminate all sorts of weird tree configurations that don't make sense.
+# Give normalizations a chance and enable them back.
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = false
+after-login-command = []
+
+# You can use it to add commands that run after AeroSpace startup.
+# 'after-startup-command' is run after 'after-login-command'
+# Available commands : https://nikitabobko.github.io/AeroSpace/commands
+after-startup-command = [
+    # JankyBorders has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar',
+    # 'exec-and-forget /opt/homebrew/opt/borders/bin/borders active_color="glow(0xd943ff64)" inactive_color=0x20494d64 width=8.0'
+]
+
+exec-on-workspace-change = [
+    '/bin/bash',
+    '-c',
+    '/opt/homebrew/opt/sketchybar/bin/sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
+]
+
+
+[workspace-to-monitor-force-assignment]
+6 = 'secondary'
+
+[gaps]
+inner.horizontal = 5
+inner.vertical =   5
+outer.left =       5
+outer.bottom =     5
+outer.top =        45
+outer.right =      5
+
+[mode.main.binding]
+    # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
+    alt-enter = '''exec-and-forget osascript -e '
+    tell application "Terminal"
+        do script
+        activate
+    end tell'
+    '''
+
+    # i3 wraps focus by default
+    alt-h =         'focus --boundaries-action wrap-around-the-workspace left'
+    alt-j =         'focus --boundaries-action wrap-around-the-workspace down'
+    alt-k =         'focus --boundaries-action wrap-around-the-workspace up'
+    alt-l =         'focus --boundaries-action wrap-around-the-workspace right'
+
+    alt-shift-h = 'move left'
+    alt-shift-j = 'move down'
+    alt-shift-k = 'move up'
+    alt-shift-l = 'move right'
+
+    # Consider using 'join-with' command as a 'split' replacement if you want to enable
+    # normalizations
+    alt-g = 'split horizontal'
+    alt-v = 'split vertical'
+
+    alt-f = 'fullscreen'
+
+    alt-s = 'layout v_accordion' # 'layout stacking' in i3
+    alt-w = 'layout h_accordion' # 'layout tabbed' in i3
+    alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+
+    alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+
+    # Not supported, because this command is redundant in AeroSpace mental model.
+    # See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
+    #alt-space = 'focus toggle_tiling_floating'
+
+    # `focus parent`/`focus child` are not yet supported, and it's not clear whether they
+    # should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
+    # alt-a = 'focus parent'
+
+    alt-1 = 'workspace 1'
+    alt-2 = 'workspace 2'
+    alt-3 = 'workspace 3'
+    alt-4 = 'workspace 4'
+    alt-5 = 'workspace 5'
+    alt-6 = 'workspace 6'
+
+    alt-shift-1 = 'move-node-to-workspace 1'
+    alt-shift-2 = 'move-node-to-workspace 2'
+    alt-shift-3 = 'move-node-to-workspace 3'
+    alt-shift-4 = 'move-node-to-workspace 4'
+    alt-shift-5 = 'move-node-to-workspace 5'
+    alt-shift-6 = 'move-node-to-workspace 6'
+
+    alt-tab = 'workspace-back-and-forth'
+
+    alt-shift-f = 'macos-native-fullscreen'
+    alt-shift-c = 'reload-config'
+
+    # resizing
+    alt-minus = 'resize smart -70'
+    alt-equal = 'resize smart +70'
+
+    alt-r = 'mode resize'
+    
+[[on-window-detected]]
+if.app-name-regex-substring = 'finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+  if.app-id = 'app.zen-browser.zen'
+  run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+  if.app-id = 'com.microsoft.VSCode'
+  run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+  if.app-id = 'com.adobe.Acrobat.Pro'
+  run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+  if.app-id = 'com.miHoYo.GenshinImpact'
+  run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+  if.app-id = 'com.microsoft.Excel'
+  run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+  if.app-id = 'com.microsoft.Powerpoint'
+  run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+  if.app-id = 'com.microsoft.Word'
+  run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+  if.app-id = 'com.hnc.Discord'
+  run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'IINA'
+run = 'layout floating'  
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'pixea'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'numi'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'tlauncher'
+run = 'layout floating'
+
+[[on-window-detected]]
+  run = 'layout floating'
+  if.app-id = 'net.whatsapp.WhatsApp'
+
+[[on-window-detected]]
+  if.app-id = 'com.github.th-ch.youtube-music'
+  run = 'move-node-to-workspace 5'
+
+[mode.resize.binding]
+    h = 'resize width -50'
+    j = 'resize height +50'
+    k = 'resize height -50'
+    l = 'resize width +50'
+    enter = 'mode main'
+    esc = 'mode main'
