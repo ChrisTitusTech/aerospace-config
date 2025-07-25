@@ -7,7 +7,7 @@ ITEM_DIR="$CONFIG_DIR/items" # Directory where the items are configured
 PLUGIN_DIR="$CONFIG_DIR/plugins" # Directory where all the plugin scripts are stored
 
 FONT="SF Pro" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
-PADDINGS=3 # All paddings use this value (icon, label, background)
+PADDINGS=1 # All paddings use this value (icon, label, background)
 
 # aerospace setting
 AEROSPACE_FOCUSED_MONITOR_NO=$(aerospace list-workspaces --focused)
@@ -24,9 +24,9 @@ launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /
 
 # Setting up the general bar appearance of the bar
 bar=(
-  height=43
+  height=34
   color=$BAR_COLOR
-  border_width=2
+  border_width=0
   border_color=$BAR_BORDER_COLOR
   shadow=off
   position=top
@@ -39,9 +39,9 @@ bar=(
   label.padding_right=0
   label.padding_left=0
   padding_left=20
-  margin=-2
+  margin=0
   topmost=window
-  color=0x00000000
+  color=0x7f000000
   border_color=0x00000000
 )
 
@@ -80,10 +80,8 @@ sketchybar --default "${defaults[@]}"
 
 
 # Left
-source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/spaces.sh"
 source "$ITEM_DIR/front_app.sh"
-#source "$ITEM_DIR/yabai.sh"
 
 # Center
 # source "$ITEM_DIR/spotify.sh"
@@ -97,7 +95,6 @@ source "$ITEM_DIR/battery.sh"
 #source "$ITEM_DIR/github.sh"
 source "$ITEM_DIR/wifi.sh"
 source "$ITEM_DIR/volume.sh"
-source "$ITEM_DIR/weather.sh"
 
 sketchybar --hotload on
 

@@ -32,10 +32,10 @@ exec-on-workspace-change = [
 [gaps]
 inner.horizontal = 5
 inner.vertical =   5
-outer.left =       5
-outer.bottom =     5
-outer.top =        45
-outer.right =      5
+outer.left =       0
+outer.bottom =     0
+outer.top =        34
+outer.right =      0
 
 [mode.main.binding]
     # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
