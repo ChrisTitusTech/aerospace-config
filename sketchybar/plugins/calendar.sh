@@ -1,2 +1,3 @@
-# Example of updating the clock format
-sketchybar --set "$NAME" label="$(date '+%a %d %b %I:%M %p')"
+#!/bin/bash
+
+sketchybar --set calendar label="$(date '+%a %m/%d %H:%M')"

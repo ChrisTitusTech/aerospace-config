@@ -1,95 +1,94 @@
 #!/bin/bash
 
-source "$CONFIG_DIR/colors.sh" # Loads all defined colors
-source "$CONFIG_DIR/icons.sh" # Loads all defined icons
+source "$CONFIG_DIR/colors.sh"
 
-ITEM_DIR="$CONFIG_DIR/items" # Directory where the items are configured
-PLUGIN_DIR="$CONFIG_DIR/plugins" # Directory where all the plugin scripts are stored
+# === BAR CONFIGURATION ===
+sketchybar --bar                     \
+  position=top                       \
+  height=34                          \
+  y_offset=0                         \
+  color=$BG0                         \
+  border_color=$BG2                  \
+  border_width=0                     \
+  padding_left=10                    \
+  padding_right=10                   \
+  shadow=off                         \
+  sticky=on                          \
+  topmost=screen                     \
+  blur_radius=0
 
-FONT="SF Pro" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
-PADDINGS=1 # All paddings use this value (icon, label, background)
+# === DEFAULT ITEM CONFIGURATION ===
+sketchybar --default                 \
+  updates=when_shown                 \
+  background.color=$BG1              \
+  background.corner_radius=6         \
+  background.height=26               \
+  icon.font="JetBrainsMono Nerd Font:Bold:13"  \
+  icon.color=$WHITE                  \
+  label.font="JetBrainsMono Nerd Font:Regular:13"  \
+  label.color=$WHITE                 \
+  padding_left=6                     \
+  padding_right=6
 
-# Setting up and starting the helper process
-HELPER=git.felix.helper
-killall helper
-(cd $CONFIG_DIR/helper && make)
-$CONFIG_DIR/helper/helper $HELPER > /dev/null 2>&1 &
+# === LEFT SIDE ===
 
-# Unload the macOS on screen indicator overlay for volume change
-launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
+# Workspaces
+sketchybar --add event aerospace_workspace_change
 
-# Setting up the general bar appearance of the bar
-bar=(
-  height=34
-  color=$BAR_COLOR
-  border_width=0
-  border_color=$BAR_BORDER_COLOR
-  shadow=off
-  position=top
-  sticky=on
-  x_offset=0
-  y_offset=0
-  padding_right=10
-  icon.padding_right=0
-  icon.padding_left=0
-  label.padding_right=0
-  label.padding_left=0
-  padding_left=20
-  margin=0
-  topmost=window
-  color=0x7f000000
-  border_color=0x00000000
-)
+for i in {1..6}; do
+  sketchybar --add space space.$i left   \
+    --set space.$i                       \
+      space=$i                           \
+      ignore_association=on              \
+      label="$i"                         \
+      label.font="JetBrainsMono Nerd Font:Bold:12" \
+      label.padding_left=8               \
+      label.padding_right=8              \
+      background.drawing=on              \
+      background.color=$BG2              \
+      background.corner_radius=3         \
+      background.height=20               \
+      background.border_width=0          \
+      updates=on                         \
+      update_freq=3                      \
+      icon.drawing=off                  \
+      click_script="aerospace workspace $i" \
+      script="$CONFIG_DIR/plugins/space.sh" \
+    --subscribe space.$i aerospace_workspace_change front_app_switched
+done
 
-sketchybar --bar "${bar[@]}"
+# Front App
+sketchybar --add item front_app left       \
+  --set front_app                          \
+    label.font="JetBrainsMono Nerd Font:Bold:13" \
+    script="$CONFIG_DIR/plugins/front_app.sh"    \
+  --subscribe front_app front_app_switched
 
-# Setting up default values
-defaults=(
-  updates=when_shown
-  icon.font="$FONT:Regular:14.0"
-  icon.color=$ICON_COLOR
-  icon.padding_left=$PADDINGS
-  icon.padding_right=$PADDINGS
-  label.font="$FONT:Semibold:13.0"
-  label.color=$LABEL_COLOR
-  label.padding_left=$PADDINGS
-  label.padding_right=$PADDINGS
-  label.shadow.drawing=on
-  label.shadow.distance=2
-  label.shadow.color=0xff000000
-  padding_right=$PADDINGS
-  padding_left=$PADDINGS
-  background.height=26
-  background.corner_radius=9
-  background.border_width=2
-  popup.background.border_width=2
-  popup.background.corner_radius=9
-  popup.background.border_color=$POPUP_BORDER_COLOR
-  popup.background.color=$POPUP_BACKGROUND_COLOR
-  popup.blur_radius=20
-  popup.background.shadow.drawing=on
-  scroll_texts=on
+# === RIGHT SIDE ===
 
-)
+# WiFi
+sketchybar --add item wifi right           \
+  --set wifi                               \
+    label.font="JetBrainsMono Nerd Font:Regular:12" \
+    icon=""                                \
+    icon.color=$BLUE                       \
+    update_freq=10                         \
+    script="$CONFIG_DIR/plugins/wifi.sh"
 
-sketchybar --default "${defaults[@]}"
+# Battery
+sketchybar --add item battery right        \
+  --set battery                            \
+    label.font="JetBrainsMono Nerd Font:Regular:12" \
+    update_freq=30                         \
+    script="$CONFIG_DIR/plugins/battery.sh"
 
+# Calendar
+sketchybar --add item calendar right       \
+  --set calendar                           \
+    label.font="JetBrainsMono Nerd Font:Regular:12" \
+    update_freq=30                         \
+    icon.drawing=off                       \
+    script="$CONFIG_DIR/plugins/calendar.sh"
 
-# Left
-source "$ITEM_DIR/spaces.sh"
-source "$ITEM_DIR/front_app.sh"
-
-# Right
-source "$ITEM_DIR/calendar.sh"
-source "$ITEM_DIR/battery.sh"
-#source "$ITEM_DIR/brew.sh"
-#source "$ITEM_DIR/github.sh"
-source "$ITEM_DIR/wifi.sh"
-source "$ITEM_DIR/volume.sh"
-
-sketchybar --hotload on
-
-# Forcing all item scripts to run (never do this outside of sketchybarrc)
+# === REFRESH ===
 sketchybar --update
-
-echo "sketchybar configuation loaded.."

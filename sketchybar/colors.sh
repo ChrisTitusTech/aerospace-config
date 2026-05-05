@@ -15,20 +15,20 @@
 # export BG1=0xff363944
 # export BG2=0xff414550
 
-### Gruvbox
-export BLACK=0xff282828
-export WHITE=0xffebdbb2
-export RED=0xfffb4934
-export GREEN=0xffb8bb26
-export BLUE=0xff83a598
-export YELLOW=0xfffe8019
-export ORANGE=0xffd3869b
-export MAGENTA=0xffd3869b
-export GREY=0xff7c6f64
+### Nord
+export BLACK=0xff2e3440
+export WHITE=0xffeceff4
+export RED=0xffbf616a
+export GREEN=0xffa3be8c
+export BLUE=0xff88c0d0
+export YELLOW=0xffebcb8b
+export ORANGE=0xffd08770
+export MAGENTA=0xffb48ead
+export GREY=0xff4c566a
 export TRANSPARENT=0x00000000
-export BG0=0xff282828
-export BG1=0xff3c3836
-export BG2=0xff504945
+export BG0=0xff2e3440
+export BG1=0xff3b4252
+export BG2=0xff434c5e
 
 # ### Catppuccin
 # export BLACK=0xff181926
@@ -45,11 +45,11 @@ export BG2=0xff504945
 # export BG1=0x603c3e4f
 # export BG2=0x60494d64
 
-export BATTERY_1=0xffa6da95
-export BATTERY_2=0xffeed49f
-export BATTERY_3=0xfff5a97f
-export BATTERY_4=0xffee99a0
-export BATTERY_5=0xffed8796
+export BATTERY_1=0xffa3be8c
+export BATTERY_2=0xffebcb8b
+export BATTERY_3=0xffd08770
+export BATTERY_4=0xffbf616a
+export BATTERY_5=0xffbf616a
 
 # General bar colors
 export BAR_COLOR=$BG0

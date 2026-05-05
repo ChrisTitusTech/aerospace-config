@@ -1,22 +1,35 @@
 #!/bin/bash
 
-update() {
-    source "$CONFIG_DIR/colors.sh"
-    COLOR=$BACKGROUND_2
-    if [ "$SELECTED" = "true" ]; then
-	COLOR=$GREY
-    fi
-    sketchybar --set space.$(aerospace list-workspaces --focused) icon.highlight=true \
-	label.highlight=true \
-	background.border_color=$GREY \
-}
+source "$CONFIG_DIR/colors.sh"
 
-set_space_label() {
-  sketchybar --set $NAME icon="$@"
-}
+workspace_num="${NAME#space.}"
+underlined_workspace_num="${workspace_num}̲"
+focused_workspace="${AEROSPACE_FOCUSED_WORKSPACE:-$FOCUSED_WORKSPACE}"
+window_count="$(aerospace list-windows --workspace "$workspace_num" 2>/dev/null | wc -l | tr -d ' ')"
 
-# echo plugin_space.sh $SENDER >> ~/aaaa
-case "$SENDER" in
-  *) update
-  ;;
-esac
+if [ -z "$window_count" ]; then
+    window_count=0
+fi
+
+if [ "$window_count" -eq 0 ]; then
+    sketchybar --set "$NAME" drawing=off
+    exit 0
+fi
+
+sketchybar --set "$NAME" drawing=on
+
+if [ -z "$focused_workspace" ]; then
+    focused_workspace="$(aerospace list-workspaces --focused 2>/dev/null)"
+fi
+
+if [ "$workspace_num" = "$focused_workspace" ]; then
+        sketchybar --set "$NAME" \
+            label="$underlined_workspace_num" \
+            background.color=$BLUE \
+            label.color=$BG0
+else
+        sketchybar --set "$NAME" \
+            label="$workspace_num" \
+            background.color=$BG2 \
+            label.color=$WHITE
+fi

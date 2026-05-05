@@ -32,17 +32,15 @@ exec-on-workspace-change = [
 2 = 1
 3 = 1
 4 = 1
-5 = 2
-6 = 2
-7 = 2
-8 = 2
+5 = 1
+6 = 1
 
 [gaps]
 inner.horizontal = 5
 inner.vertical =   5
 outer.left =       0
 outer.bottom =     0
-outer.top =        34
+outer.top =        0
 outer.right =      0
 
 [mode.main.binding]
