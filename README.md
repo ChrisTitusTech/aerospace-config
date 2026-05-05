@@ -1,53 +1,84 @@
 # aerospace-config
 
-Minimal AeroSpace + Sketchybar setup for macOS. Tiling window manager with a lean status bar — Nord themed, no dependencies beyond the two tools.
+Minimal AeroSpace + Sketchybar setup for macOS. Tiling window manager with a lean status bar, Nord themed.
 
-## What's included
+## Quick Start
+
+1. Install dependencies:
+
+```bash
+brew install nikitabobko/tap/aerospace
+brew install felixkratz/formulae/sketchybar
+brew install --cask font-jetbrains-mono-nerd-font
+```
+
+2. Clone this repo and run the installer:
+
+```bash
+git clone https://github.com/ChrisTitusTech/aerospace-config.git ~/github/aerospace-config
+cd ~/github/aerospace-config
+chmod +x install.sh
+./install.sh
+```
+
+3. Start services:
+
+```bash
+brew services start sketchybar
+aerospace reload-config
+```
+
+If AeroSpace is not managing windows yet, open macOS Settings and grant Accessibility and Automation permissions to AeroSpace.
+
+## What This Repo Contains
 
 | Path | Purpose |
 |------|---------|
 | `aerospace/aerospace.toml` | AeroSpace tiling WM config (hjkl focus/move, 6 workspaces) |
 | `sketchybar/sketchybarrc` | Bar layout — workspaces, active app, battery, wifi, clock |
-| `sketchybar/colors.sh` | Gruvbox color palette |
-| `sketchybar/plugins/aerospace.sh` | Highlights focused workspace |
+| `sketchybar/colors.sh` | Nord color palette |
+| `sketchybar/plugins/space.sh` | Highlights focused workspace |
 | `sketchybar/plugins/front_app.sh` | Shows active app name |
 | `sketchybar/plugins/battery.sh` | Battery icon + percentage |
 | `sketchybar/plugins/calendar.sh` | Date and time |
-| `sketchybar/plugins/wifi.sh` | WiFi SSID + status |
+| `sketchybar/plugins/wifi.sh` | Network online/offline status |
 
-## Requirements
+## Installer Behavior
+
+`install.sh` creates symlinks in `~/.config` and preserves local files by renaming them to `*.bak.<timestamp>` before linking.
+
+It links:
+
+- `~/.config/aerospace/aerospace.toml`
+- `~/.config/sketchybar/sketchybarrc`
+- `~/.config/sketchybar/colors.sh`
+- `~/.config/sketchybar/plugins`
+
+## Manual Install (Without Script)
 
 ```bash
-brew install nikitabobko/tap/aerospace
-brew install felixkratz/formulae/sketchybar
-```
+mkdir -p ~/.config/aerospace ~/.config/sketchybar
 
-> Requires a [Nerd Font](https://www.nerdfonts.com) — the config uses **JetBrainsMono Nerd Font** for all bar text and icons. Install it with `brew install --cask font-jetbrains-mono-nerd-font`.
-
-## Install
-
-Clone and symlink the configs into place:
-
-```bash
-git clone https://github.com/ChrisTitusTech/aerospace-config.git ~/github/aerospace-config
-cd ~/github/aerospace-config
-
-# AeroSpace
-mkdir -p ~/.config/aerospace
 ln -sf "$PWD/aerospace/aerospace.toml" ~/.config/aerospace/aerospace.toml
-
-# Sketchybar
-mkdir -p ~/.config/sketchybar
 ln -sf "$PWD/sketchybar/sketchybarrc"  ~/.config/sketchybar/sketchybarrc
 ln -sf "$PWD/sketchybar/colors.sh"     ~/.config/sketchybar/colors.sh
 ln -sf "$PWD/sketchybar/plugins"       ~/.config/sketchybar/plugins
 ```
 
-Then start both services:
+## Configure It Quickly
+
+Common changes most users make:
+
+- Colors: edit `sketchybar/colors.sh`.
+- Workspace count: update both `aerospace/aerospace.toml` (workspace bindings) and `sketchybar/sketchybarrc` (workspace loop).
+- App workspace routing: edit the `[[on-window-detected]]` blocks in `aerospace/aerospace.toml`.
+- Bar modules: add or remove items in `sketchybar/sketchybarrc`.
+
+After any change:
 
 ```bash
-brew services start sketchybar
 aerospace reload-config
+brew services restart sketchybar
 ```
 
 ## Key Bindings
@@ -67,12 +98,15 @@ aerospace reload-config
 | `Alt + Tab` | Previous workspace |
 | `Alt + Shift + c` | Reload config |
 
-## Customization
+## Verify Installation
 
-- **Colors** — edit `sketchybar/colors.sh`. All plugins source it.
-- **Workspaces** — the loop in `sketchybarrc` runs 1–6. Change the range to add/remove.
-- **App assignments** — add `[[on-window-detected]]` blocks in `aerospace.toml`.
+Run these checks if something looks off:
+
+```bash
+aerospace config --all-keys >/dev/null && echo "AeroSpace config OK"
+sketchybar --reload
+```
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+MIT. See [LICENSE](LICENSE).
