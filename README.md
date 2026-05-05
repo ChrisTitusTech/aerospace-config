@@ -54,6 +54,46 @@ It links:
 - `~/.config/sketchybar/colors.sh`
 - `~/.config/sketchybar/plugins`
 
+## Uninstall
+
+Use the uninstall script to remove symlinks created by this repo:
+
+```bash
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+To remove symlinks and restore the most recent backups created by `install.sh`:
+
+```bash
+./uninstall.sh --restore
+```
+
+`uninstall.sh` only removes symlinks that point to this repository and will not delete unrelated files.
+
+## Rollback
+
+If a config change causes issues, you have two rollback options:
+
+1. Full rollback to the latest backups:
+
+```bash
+./uninstall.sh --restore
+```
+
+2. Manual rollback for a single file by swapping a backup back into place, for example:
+
+```bash
+mv ~/.config/aerospace/aerospace.toml.bak.<timestamp> ~/.config/aerospace/aerospace.toml
+```
+
+After rollback:
+
+```bash
+aerospace reload-config
+brew services restart sketchybar
+```
+
 ## Manual Install (Without Script)
 
 ```bash
