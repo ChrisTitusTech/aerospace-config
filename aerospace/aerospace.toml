@@ -31,15 +31,6 @@ persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8']
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-    # JankyBorders has a built-in detection of already running process,
-    # so it won't be run twice on AeroSpace restart
-    'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar',
-]
-
-exec-on-workspace-change = [
-    '/bin/bash',
-    '-c',
-    'bash $HOME/.config/sketchybar/plugins/aerospace_workspace.sh',
 ]
 
 [key-mapping]
@@ -55,7 +46,7 @@ inner.horizontal = 5
 inner.vertical = 5
 outer.left = 0
 outer.bottom = 0
-outer.top = 34
+outer.top = 0
 outer.right = 0
 
 [mode.main.binding]

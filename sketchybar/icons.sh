@@ -1,1 +1,0 @@
-/Users/titus/github/aerospace-config/sketchybar/icons.sh

@@ -5,7 +5,6 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 AEROSPACE_DIR="$CONFIG_HOME/aerospace"
-SKETCHYBAR_DIR="$CONFIG_HOME/sketchybar"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 INSTALL_MISSING=true
 
@@ -13,7 +12,7 @@ usage() {
   cat <<'EOF'
 Usage: ./install.sh [--check-only]
 
-Creates symlinks for AeroSpace and SketchyBar config files.
+Creates symlinks for AeroSpace config files.
 
 Options:
   --check-only       Check dependencies but do not install missing packages
@@ -86,7 +85,6 @@ check_prereqs() {
   command_exists brew || error "Homebrew is required. Install from https://brew.sh"
 
   ensure_formula "aerospace" "nikitabobko/tap/aerospace"
-  ensure_formula "sketchybar" "felixkratz/formulae/sketchybar"
   ensure_cask "font-jetbrains-mono-nerd-font"
 }
 
@@ -145,14 +143,10 @@ log "Using repo at $REPO_DIR"
 check_prereqs
 check_settings
 
-mkdir -p "$AEROSPACE_DIR" "$SKETCHYBAR_DIR"
+mkdir -p "$AEROSPACE_DIR"
 
 link_path "$REPO_DIR/aerospace/aerospace.toml" "$AEROSPACE_DIR/aerospace.toml"
-link_path "$REPO_DIR/sketchybar/sketchybarrc" "$SKETCHYBAR_DIR/sketchybarrc"
-link_path "$REPO_DIR/sketchybar/colors.sh" "$SKETCHYBAR_DIR/colors.sh"
-link_path "$REPO_DIR/sketchybar/plugins" "$SKETCHYBAR_DIR/plugins"
 
 log "Install complete."
 log "Next steps:"
-log "  1) brew services start sketchybar"
-log "  2) aerospace reload-config"
+log "  1) aerospace reload-config"

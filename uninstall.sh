@@ -4,7 +4,6 @@ set -euo pipefail
 
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 AEROSPACE_DIR="$CONFIG_HOME/aerospace"
-SKETCHYBAR_DIR="$CONFIG_HOME/sketchybar"
 RESTORE=false
 
 usage() {
@@ -13,9 +12,6 @@ Usage: ./uninstall.sh [--restore]
 
 Removes symlinks created by install.sh:
   ~/.config/aerospace/aerospace.toml
-  ~/.config/sketchybar/sketchybarrc
-  ~/.config/sketchybar/colors.sh
-  ~/.config/sketchybar/plugins
 
 Options:
   --restore   Restore most recent *.bak.* backups if available
@@ -94,17 +90,10 @@ for arg in "$@"; do
 done
 
 remove_link_if_ours "$AEROSPACE_DIR/aerospace.toml" "/aerospace/aerospace.toml"
-remove_link_if_ours "$SKETCHYBAR_DIR/sketchybarrc" "/sketchybar/sketchybarrc"
-remove_link_if_ours "$SKETCHYBAR_DIR/colors.sh" "/sketchybar/colors.sh"
-remove_link_if_ours "$SKETCHYBAR_DIR/plugins" "/sketchybar/plugins"
 
 if [[ "$RESTORE" == true ]]; then
   log "Restoring latest backups when available..."
   restore_latest_backup "$AEROSPACE_DIR/aerospace.toml"
-  restore_latest_backup "$SKETCHYBAR_DIR/sketchybarrc"
-  restore_latest_backup "$SKETCHYBAR_DIR/colors.sh"
-  restore_latest_backup "$SKETCHYBAR_DIR/plugins"
 fi
 
 log "Uninstall complete."
-log "Optional: brew services stop sketchybar"

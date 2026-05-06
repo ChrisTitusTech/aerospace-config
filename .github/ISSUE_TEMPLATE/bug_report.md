@@ -10,7 +10,6 @@ A clear description of what's wrong.
 **Environment**
 - macOS version:
 - AeroSpace version (`aerospace --version`):
-- Sketchybar version (`sketchybar --version`):
 
 **Steps to reproduce**
 
