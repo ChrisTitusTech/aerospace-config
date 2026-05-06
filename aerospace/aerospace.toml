@@ -45,22 +45,17 @@ exec-on-workspace-change = [
 [key-mapping]
     preset = 'qwerty'
 
-[workspace-to-monitor-force-assignment]
-1 = 1
-2 = 1
-3 = 1
-4 = 1
-5 = [2, 1]
-6 = [2, 1]
-7 = [3, 2, 1]
-8 = [3, 2, 1]
+# Avoid hard monitor-index pinning.
+# In clamshell mode (laptop lid closed), macOS/AeroSpace monitor indices can shift,
+# which can make workspaces appear on unexpected displays.
+# Let AeroSpace place workspaces dynamically across currently available monitors.
 
 [gaps]
 inner.horizontal = 5
 inner.vertical = 5
 outer.left = 0
 outer.bottom = 0
-outer.top = 0
+outer.top = 34
 outer.right = 0
 
 [mode.main.binding]

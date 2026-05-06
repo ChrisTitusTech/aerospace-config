@@ -7,3 +7,4 @@ if [ -z "$APP_NAME" ]; then
 fi
 
 sketchybar --set front_app label="$APP_NAME"
+sketchybar --trigger aerospace_workspace_change

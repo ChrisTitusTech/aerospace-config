@@ -2,9 +2,13 @@
 
 source "$CONFIG_DIR/colors.sh"
 
+# Custom event used to refresh workspace visuals.
+sketchybar --add event aerospace_workspace_change
+
 # === BAR CONFIGURATION ===
 sketchybar --bar                     \
   position=top                       \
+  display=all                        \
   height=34                          \
   y_offset=0                         \
   color=$BG0                         \
@@ -14,7 +18,8 @@ sketchybar --bar                     \
   padding_right=10                   \
   shadow=off                         \
   sticky=on                          \
-  topmost=screen                     \
+  topmost=on                         \
+  show_in_fullscreen=on              \
   blur_radius=0
 
 # === DEFAULT ITEM CONFIGURATION ===
@@ -34,9 +39,8 @@ sketchybar --default                 \
 
 # Workspaces
 for i in {1..8}; do
-  sketchybar --add space space.$i left   \
+  sketchybar --add item space.$i left    \
     --set space.$i                       \
-      space=$i                           \
       ignore_association=on              \
       label="$i"                         \
       label.font="JetBrainsMono Nerd Font:Bold:12" \
@@ -48,7 +52,9 @@ for i in {1..8}; do
       background.height=20               \
       background.border_width=0          \
       icon.drawing=off                   \
+        script="$CONFIG_DIR/plugins/aerospace_workspace.sh" \
       click_script="aerospace workspace $i"
+      sketchybar --subscribe space.$i aerospace_workspace_change front_app_switched display_change system_woke
 done
 
 # Front App
