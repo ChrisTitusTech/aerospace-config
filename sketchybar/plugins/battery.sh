@@ -28,4 +28,4 @@ if [ -n "$CHARGING" ] && [ "$PERCENTAGE" -ge 95 ]; then
   COLOR=$GREEN
 fi
 
-sketchybar --set battery icon="$ICON" icon.color=$COLOR label="${PERCENTAGE}%"
+sketchybar --set battery icon="$ICON" icon.color=$COLOR label=" ${PERCENTAGE}%"
