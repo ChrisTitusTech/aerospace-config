@@ -11,10 +11,10 @@ if [ "$PERCENTAGE" = "" ]; then
 fi
 
 if [ -n "$CHARGING" ]; then
-  ICON="🔌"
+  ICON="􀢋"
   COLOR=$GREEN
 else
-  ICON="🔋"
+  ICON="􀛨"
   if [ "$PERCENTAGE" -ge 80 ]; then
     COLOR=$GREEN
   elif [ "$PERCENTAGE" -ge 50 ]; then

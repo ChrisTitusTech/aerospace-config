@@ -54,7 +54,7 @@ for i in {1..6}; do
       icon.drawing=off                  \
       click_script="aerospace workspace $i" \
       script="$CONFIG_DIR/plugins/space.sh" \
-    --subscribe space.$i aerospace_workspace_change front_app_switched
+    --subscribe space.$i aerospace_workspace_change front_app_switched space_change space_windows_change
 done
 
 # Front App
@@ -63,7 +63,7 @@ sketchybar --add item front_app left       \
     background.color=$BG0                  \
     label.font="JetBrainsMono Nerd Font:Bold:13" \
     script="$CONFIG_DIR/plugins/front_app.sh"    \
-  --subscribe front_app front_app_switched
+  --subscribe front_app front_app_switched aerospace_workspace_change space_change
 
 # === RIGHT SIDE ===
 
@@ -71,6 +71,7 @@ sketchybar --add item front_app left       \
 sketchybar --add item wifi right           \
   --set wifi                               \
     background.color=$BG0                  \
+    icon.font="SF Pro:Semibold:14.0"      \
     label.font="JetBrainsMono Nerd Font:Regular:12" \
     icon=""                                \
     icon.color=$BLUE                       \
@@ -81,6 +82,7 @@ sketchybar --add item wifi right           \
 sketchybar --add item battery right        \
   --set battery                            \
     background.color=$BG0                  \
+    icon.font="SF Pro:Semibold:14.0"      \
     label.font="JetBrainsMono Nerd Font:Regular:12" \
     update_freq=30                         \
     script="$CONFIG_DIR/plugins/battery.sh"
