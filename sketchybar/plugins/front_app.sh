@@ -11,3 +11,9 @@ if [ -z "$APP_NAME" ]; then
 fi
 
 sketchybar --set front_app label="$APP_NAME"
+
+# Re-sync workspace highlight with a fresh WM query to avoid stale focus state.
+FOCUSED_WORKSPACE="$(aerospace list-workspaces --focused 2>/dev/null | tr -d '[:space:]')"
+if [ -n "$FOCUSED_WORKSPACE" ]; then
+	sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE="$FOCUSED_WORKSPACE"
+fi

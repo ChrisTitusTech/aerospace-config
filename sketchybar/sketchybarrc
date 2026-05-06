@@ -75,6 +75,7 @@ sketchybar --add item wifi right           \
     label.font="JetBrainsMono Nerd Font:Regular:12" \
     icon=""                                \
     icon.color=$BLUE                       \
+    click_script="$CONFIG_DIR/plugins/wifi_click.sh" \
     update_freq=10                         \
     script="$CONFIG_DIR/plugins/wifi.sh"
 

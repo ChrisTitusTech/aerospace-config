@@ -5,6 +5,10 @@ source "$CONFIG_DIR/colors.sh"
 workspace_num="${NAME#space.}"
 underlined_workspace_num="${workspace_num}̲"
 focused_workspace="${AEROSPACE_FOCUSED_WORKSPACE:-$FOCUSED_WORKSPACE}"
+live_focused_workspace="$(aerospace list-workspaces --focused 2>/dev/null | tr -d '[:space:]')"
+if [ -n "$live_focused_workspace" ]; then
+    focused_workspace="$live_focused_workspace"
+fi
 window_count="$(aerospace list-windows --workspace "$workspace_num" 2>/dev/null | wc -l | tr -d ' ')"
 
 if [ -z "$window_count" ]; then
@@ -17,10 +21,6 @@ if [ "$window_count" -eq 0 ]; then
 fi
 
 sketchybar --set "$NAME" drawing=on
-
-if [ -z "$focused_workspace" ]; then
-    focused_workspace="$(aerospace list-workspaces --focused 2>/dev/null)"
-fi
 
 if [ "$workspace_num" = "$focused_workspace" ]; then
         sketchybar --set "$NAME" \
