@@ -12,16 +12,20 @@ fi
 
 if [ -n "$CHARGING" ]; then
   ICON="􀢋"
-  COLOR=$GREEN
+  COLOR=$BLUE
 else
   ICON="􀛨"
-  if [ "$PERCENTAGE" -ge 80 ]; then
-    COLOR=$GREEN
-  elif [ "$PERCENTAGE" -ge 50 ]; then
+  if [ "$PERCENTAGE" -ge 60 ]; then
+    COLOR=$WHITE
+  elif [ "$PERCENTAGE" -ge 30 ]; then
     COLOR=$YELLOW
   else
     COLOR=$RED
   fi
+fi
+
+if [ -n "$CHARGING" ] && [ "$PERCENTAGE" -ge 95 ]; then
+  COLOR=$GREEN
 fi
 
 sketchybar --set battery icon="$ICON" icon.color=$COLOR label="${PERCENTAGE}%"
