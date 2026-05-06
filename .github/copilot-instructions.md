@@ -18,3 +18,7 @@
 - WiFi offline: `􀙈`
 - Battery charging: `􀢋`
 - Battery: `􀛨`
+
+## Sketchybar scripts
+
+avoid polling where possible and instead subscribe to relevant events (e.g. `front_app_switched`, `space_change`, `aerospace_workspace_change`) to trigger updates in SketchyBar plugins.
