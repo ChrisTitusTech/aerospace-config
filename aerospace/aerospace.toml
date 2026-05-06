@@ -1,6 +1,8 @@
 # Reference: https://github.com/i3/i3/blob/next/etc/config
 # Reference: https://github.com/adriankarlen/dots/blob/main/.config/aerospace/aerospace.toml
 
+config-version = 2
+
 # i3 doesn't have "normalizations" feature, which is why we disable them here.
 # But the feature is very helpful.
 # Normalizations eliminate all sorts of weird tree configurations that don't make sense.
@@ -9,6 +11,21 @@ start-at-login = true
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 after-login-command = []
+
+# Wide monitors use horizontal tiling, tall monitors use vertical
+default-root-container-orientation = 'auto'
+
+# Padding shown in accordion layouts to indicate more windows exist
+accordion-padding = 30
+
+# Mouse follows focused monitor (essential for multi-monitor)
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Prevent cmd-h from hiding windows out of AeroSpace's sight
+automatically-unhide-macos-hidden-apps = true
+
+# Keep workspaces alive even when empty
+persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8']
 
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
@@ -24,6 +41,9 @@ exec-on-workspace-change = [
     '-c',
     '/opt/homebrew/opt/sketchybar/bin/sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
 ]
+
+[key-mapping]
+    preset = 'qwerty'
 
 [workspace-to-monitor-force-assignment]
 1 = 1
@@ -92,10 +112,20 @@ outer.right = 0
     alt-shift-7 = 'move-node-to-workspace 7'
     alt-shift-8 = 'move-node-to-workspace 8'
     alt-tab = 'workspace-back-and-forth'
+    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+    # Monitor focus
+    alt-ctrl-h = 'focus-monitor left'
+    alt-ctrl-l = 'focus-monitor right'
+
+    # Move window to adjacent monitor
+    alt-ctrl-shift-h = 'move-node-to-monitor --wrap-around left'
+    alt-ctrl-shift-l = 'move-node-to-monitor --wrap-around right'
 
     # Misc
     alt-shift-f = 'macos-native-fullscreen'
     alt-shift-c = 'reload-config'
+    alt-shift-semicolon = 'mode service'
 
     # Resize
     alt-minus = 'resize smart -70'
@@ -170,3 +200,15 @@ run = 'layout floating'
     l = 'resize width +50'
     enter = 'mode main'
     esc = 'mode main'
+
+[mode.service.binding]
+    esc = 'mode main'
+    r = ['flatten-workspace-tree', 'mode main'] # Reset layout
+    f = ['layout floating tiling', 'mode main']  # Toggle floating
+    backspace = ['close-all-windows-but-current', 'mode main']
+
+    # Join focused window with neighbour into a shared container
+    alt-shift-h = ['join-with left', 'mode main']
+    alt-shift-j = ['join-with down', 'mode main']
+    alt-shift-k = ['join-with up', 'mode main']
+    alt-shift-l = ['join-with right', 'mode main']

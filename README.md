@@ -123,20 +123,95 @@ brew services restart sketchybar
 
 ## Key Bindings
 
+### Window Focus
+
 | Key | Action |
 |-----|--------|
-| `Alt + h/j/k/l` | Focus window left/down/up/right |
-| `Alt + Shift + h/j/k/l` | Move window |
-| `Alt + 1-8` | Switch workspace |
-| `Alt + Shift + 1-8` | Move window to workspace |
-| `Alt + f` | Fullscreen |
-| `Alt + Shift + Space` | Toggle floating |
-| `Alt + e` | Tile layout |
-| `Alt + s / w` | Accordion layout |
-| `Alt + -/=` | Resize |
-| `Alt + r` | Resize mode |
-| `Alt + Tab` | Previous workspace |
-| `Alt + Shift + c` | Reload config |
+| `Alt + h` | Focus window left |
+| `Alt + j` | Focus window down |
+| `Alt + k` | Focus window up |
+| `Alt + l` | Focus window right |
+
+### Window Movement
+
+| Key | Action |
+|-----|--------|
+| `Alt + Shift + h` | Move window left |
+| `Alt + Shift + j` | Move window down |
+| `Alt + Shift + k` | Move window up |
+| `Alt + Shift + l` | Move window right |
+
+### Layout
+
+| Key | Action |
+|-----|--------|
+| `Alt + e` | Toggle tile layout (horizontal / vertical) |
+| `Alt + s` | Vertical accordion layout |
+| `Alt + w` | Horizontal accordion layout |
+| `Alt + g` | Split horizontal |
+| `Alt + v` | Split vertical |
+| `Alt + f` | AeroSpace fullscreen |
+| `Alt + Shift + f` | macOS native fullscreen |
+| `Alt + Shift + Space` | Toggle floating / tiling |
+
+### Resize
+
+| Key | Action |
+|-----|--------|
+| `Alt + -` | Shrink window |
+| `Alt + =` | Grow window |
+| `Alt + r` | Enter resize mode |
+
+**Resize mode** (`Alt + r`, then):
+
+| Key | Action |
+|-----|--------|
+| `h` | Decrease width |
+| `j` | Increase height |
+| `k` | Decrease height |
+| `l` | Increase width |
+| `Enter` / `Esc` | Exit resize mode |
+
+### Workspaces
+
+| Key | Action |
+|-----|--------|
+| `Alt + 1–8` | Switch to workspace 1–8 |
+| `Alt + Shift + 1–8` | Move window to workspace 1–8 |
+| `Alt + Tab` | Toggle previous workspace |
+| `Alt + Shift + Tab` | Move workspace to next monitor |
+
+### Multi-Monitor
+
+| Key | Action |
+|-----|--------|
+| `Alt + Ctrl + h` | Focus monitor left |
+| `Alt + Ctrl + l` | Focus monitor right |
+| `Alt + Ctrl + Shift + h` | Move window to monitor left |
+| `Alt + Ctrl + Shift + l` | Move window to monitor right |
+
+### Misc
+
+| Key | Action |
+|-----|--------|
+| `Alt + Enter` | Open Terminal |
+| `Alt + Shift + c` | Reload AeroSpace config |
+| `Alt + Shift + ;` | Enter service mode |
+
+### Service Mode
+
+Enter with `Alt + Shift + ;`, exit with `Esc`.
+
+| Key | Action |
+|-----|--------|
+| `r` | Flatten / reset workspace layout |
+| `f` | Toggle floating / tiling |
+| `Backspace` | Close all windows except current |
+| `Alt + Shift + h` | Join with window to the left |
+| `Alt + Shift + j` | Join with window below |
+| `Alt + Shift + k` | Join with window above |
+| `Alt + Shift + l` | Join with window to the right |
+| `Esc` | Return to main mode |
 
 ## Multi-Monitor Workspace Layout
 
