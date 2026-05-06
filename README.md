@@ -34,7 +34,7 @@ If AeroSpace is not managing windows yet, open macOS Settings and grant Accessib
 
 | Path | Purpose |
 |------|---------|
-| `aerospace/aerospace.toml` | AeroSpace tiling WM config (hjkl focus/move, 6 workspaces) |
+| `aerospace/aerospace.toml` | AeroSpace tiling WM config (hjkl focus/move, 8 workspaces, multi-monitor aware) |
 | `sketchybar/sketchybarrc` | Bar layout — workspaces, active app, battery, wifi, clock |
 | `sketchybar/colors.sh` | Nord color palette |
 | `sketchybar/plugins/space.sh` | Highlights focused workspace |
@@ -110,7 +110,7 @@ ln -sf "$PWD/sketchybar/plugins"       ~/.config/sketchybar/plugins
 Common changes most users make:
 
 - Colors: edit `sketchybar/colors.sh`.
-- Workspace count: update both `aerospace/aerospace.toml` (workspace bindings) and `sketchybar/sketchybarrc` (workspace loop).
+- Workspace count: update both `aerospace/aerospace.toml` (workspace bindings + `[workspace-to-monitor-force-assignment]`) and `sketchybar/sketchybarrc` (workspace loop).
 - App workspace routing: edit the `[[on-window-detected]]` blocks in `aerospace/aerospace.toml`.
 - Bar modules: add or remove items in `sketchybar/sketchybarrc`.
 
@@ -127,8 +127,8 @@ brew services restart sketchybar
 |-----|--------|
 | `Alt + h/j/k/l` | Focus window left/down/up/right |
 | `Alt + Shift + h/j/k/l` | Move window |
-| `Alt + 1-6` | Switch workspace |
-| `Alt + Shift + 1-6` | Move window to workspace |
+| `Alt + 1-8` | Switch workspace |
+| `Alt + Shift + 1-8` | Move window to workspace |
 | `Alt + f` | Fullscreen |
 | `Alt + Shift + Space` | Toggle floating |
 | `Alt + e` | Tile layout |
@@ -137,6 +137,18 @@ brew services restart sketchybar
 | `Alt + r` | Resize mode |
 | `Alt + Tab` | Previous workspace |
 | `Alt + Shift + c` | Reload config |
+
+## Multi-Monitor Workspace Layout
+
+Workspaces are automatically distributed across connected monitors. When fewer monitors are connected, workspaces fall back to the next available monitor.
+
+| Workspaces | 1 Monitor | 2 Monitors | 3 Monitors |
+|------------|-----------|------------|------------|
+| 1 – 4 | Monitor 1 | Monitor 1 | Monitor 1 |
+| 5 – 6 | Monitor 1 | Monitor 2 | Monitor 2 |
+| 7 – 8 | Monitor 1 | Monitor 2 | Monitor 3 |
+
+To adjust the distribution, edit the `[workspace-to-monitor-force-assignment]` block in `aerospace/aerospace.toml`.
 
 ## Verify Installation
 
